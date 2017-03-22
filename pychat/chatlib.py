@@ -61,8 +61,9 @@ def message_pretty_str(message):
     str representation of a message
     '''
 
-    fmt = '''{0[timestamp]:%H:%M:%S}@{0[from_user]}:
-       {0[message]!r}'''
+    fmt = '''{0[timestamp]:%H:%M:%S} {0[from_user]}:
+    {0[message]}
+'''
     return fmt.format(message)
 
 
