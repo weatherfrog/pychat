@@ -28,12 +28,12 @@ pip install -r requirements.txt
 Start the server:
 
 ```
-python pychat/server.py SERVER-IP
+python pychat/server.py 0.0.0.0
 ```
 
 Start the client in a different terminal (don't forget to activate the virtual
 environment again):
 
 ```
-python pychat/client.py SERVER-IP
+python pychat/client.py 0.0.0.0
 ```
