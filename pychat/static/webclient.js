@@ -7,7 +7,7 @@ function poll() {
   var url = "/chat/get_all_messages";
 
   var success = function(data) {
-    console.log(data);
+    // console.log(data);
   };
 
   $.ajax({
@@ -19,4 +19,25 @@ function poll() {
 }
 
 
-window.setInterval(poll, INTERVAL);
+// window.setInterval(poll, INTERVAL);
+
+$('#inputfield').keyup(function(e){
+
+  if(e.keyCode == 13) {  // enter key
+    // TODO reset text field and post message
+    var message = e.target.value;
+    var data = {
+      'from_user': "TODO",
+      'message': message,
+    };
+    $.ajax({
+      type: "POST",
+      dataType: "json",
+      url: "/chat/post",
+      data: JSON.stringify(data),
+      contentType: "application/json; charset=utf-8",
+      success: function() {},
+      error: function() {} 
+    });
+  }
+});

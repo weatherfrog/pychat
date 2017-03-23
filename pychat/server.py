@@ -5,10 +5,13 @@
 simple chat server...
 '''
 
-from flask import request, render_template
+from datetime import datetime
 
-from pychat.chatlib import message_list_to_json, message_from_json
-from pychat import app
+from flask import request, render_template, Flask
+
+from chatlib import message_list_to_json, message_from_json
+
+app = Flask(__name__)
 
 
 MESSAGE_LIST = []
@@ -26,11 +29,19 @@ def index():
 def post_message():
     '''
     post a new message from a client
+    expects a json string with the following format:
+
+    {
+        'from_user': "some username",
+        'message': "blablabla",
+    }
     '''
 
     app.logger.debug('post_message()')
 
     message = message_from_json(request.json)
+    # we add a date/time to the message
+    message["timestamp"] = datetime.utcnow()
     MESSAGE_LIST.append(message)
 
     return 'Message posted!'
@@ -59,3 +70,24 @@ def get_all_messages():
     app.logger.debug('get_all_last_messages')
 
     return message_list_to_json(MESSAGE_LIST)
+
+
+if __name__ == "__main__":
+    # will serve on http://127.0.0.1:5000/
+    # you can navigate there with your browser
+
+    import sys
+
+    # if an argument of the form '192.168.81.116' is given, it will be the
+    # address the server binds do
+
+    if len(sys.argv) == 1:
+        ip = '127.0.0.1'
+    elif len(sys.argv) == 2:
+        ip = sys.argv[1]
+    else:
+        print('usage: {} [ip]'.format(sys.argv[0]))
+        sys.exit(255)
+    print('binding to {}'.format(ip))
+
+    app.run(debug=True, host=ip, port=8080)

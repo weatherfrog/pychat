@@ -95,8 +95,7 @@ class ChatShell:
         post message on the server
         '''
 
-        message = {'from_user': self.user, 'message': user_message,
-                   'timestamp': datetime.now()}
+        message = {'from_user': self.user, 'message': user_message}
         uri = urljoin(self.server, '/chat/post')
         req = requests.post(uri, json=message_to_json(message))
         return req.text
