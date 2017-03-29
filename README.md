@@ -1,6 +1,6 @@
 # pychat
 
-Python chat for the Powercoders school
+Very simple chat server based on Flask.
 
 ![Screenshot](screenshot.png)
 
