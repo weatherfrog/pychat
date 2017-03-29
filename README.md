@@ -2,6 +2,9 @@
 
 Python chat for the Powercoders school
 
+![Screenshot](screenshot.png)
+
+
 
 ## Instructions
 
@@ -19,21 +22,24 @@ python.exe -m venv venv
 venv\Scripts\activate
 ```
 
-Then install requirements:
+Then install requirements (flask):
 
 ```
 pip install -r requirements.txt
 ```
 
-Start the server:
+Start the chat server:
 
 ```
-python pychat/server.py SERVER-IP
+python pychat/server.py 
+ * Running on http://0.0.0.0:8080/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 673-164-341
 ```
 
-Start the client in a different terminal (don't forget to activate the virtual
-environment again):
+Point your browser to [http://0.0.0.0:8080](http://0.0.0.0:8080) and start
+chatting!
 
-```
-python pychat/client.py SERVER-IP
-```
+Hint: You can find out your IP address with `ifconfig` and let others use your
+chat server.

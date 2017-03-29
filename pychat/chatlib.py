@@ -1,6 +1,3 @@
-#!/usr/bin/python3
-# -*- coding: utf-8 -*-
-
 '''
 stuff needed on the server and on the client.
 '''
