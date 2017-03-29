@@ -36,15 +36,15 @@ def post_message():
         'message': "blablabla",
     }
     '''
-
     app.logger.debug('post_message()')
 
-    message = message_from_json(request.json)
+    message = request.json
     # we add a date/time to the message
     message["timestamp"] = datetime.utcnow()
     MESSAGE_LIST.append(message)
 
-    return 'Message posted!'
+    # response has http status code 200 (meaning "successful")
+    return 'Message posted!', 200
 
 
 @app.route('/chat/get_last_messages/<int:number_messages>')
