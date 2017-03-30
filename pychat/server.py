@@ -1,85 +1,90 @@
-#!/usr/bin/python3
-# -*- coding: utf-8 -*-
-
 '''
-simple chat server...
+simple chat server
 '''
 
-from flask import Flask, request, render_template
+from datetime import datetime
 
-from chatlib import message_list_to_json, message_from_json
-
+from flask import request, render_template, Flask, jsonify
 
 app = Flask(__name__)
 
 
-MESSAGE_LIST = []
+# holds all messages. A message is a dict with keys 'nickname', 'message', and
+# 'time'
+message_list = []
 
 
 @app.route('/')
 def index():
     '''
-    the main page...
+    the main page
     '''
     return render_template("webclient.html")
+
+
+@app.route('/chat/get_all_messages/<nickname>')
+def get_all_messages(nickname):
+    '''
+    Returns a json list of the following form:
+
+        [
+          {
+            "message": "Hello world!",
+            "nickname": "Mary",
+            "time": "Wed, 29 Mar 2017 21:10:15 GMT"
+          },
+          ...
+        ]
+
+    Args:
+        nickname: nickname of the user requesting messages
+    '''
+    # TODO filter out private messages that are not meant to be seen by user
+    # `nickname`
+
+    # note that jsonify() automatically sets correct http header
+    # ("Content-type: application/json" etc.)
+    return jsonify(message_list)
 
 
 @app.route('/chat/post', methods=('POST', ))
 def post_message():
     '''
-    post a new message from a client
+    Post a new message to the chat server.
+
+    Expects a json string with the following format::
+
+        {
+            'nickname': 'some username',
+            'message': 'blablabla',
+        }
     '''
+    data = request.json
 
-    app.logger.debug('post_message()')
+    # TODO check if message starts with @somenickname. If so, it is a personal
+    # message that should not be visible to other users. Store this information
+    # below in an additional key/value pair (call it "message_for":
+    # "somenickname", for example)
 
-    message = message_from_json(request.json)
-    MESSAGE_LIST.append(message)
+    # Check if json data has "nickname" and "message" attributes.
+    # If data contains other attributes, we ignore them.
+    try:
+        message_list.append({
+            "message": data["message"],
+            "nickname": data["nickname"],
+            # we add a date/time to the message
+            "time": datetime.utcnow(),
+        })
+    except KeyError:
+        # http status code 400 means "Bad Request"
+        return ("Received invalid json data! Must contain attributes "
+                "'message' and 'nickname'.", 400)
 
-    return 'Message posted!'
-
-
-@app.route('/chat/get_last_messages/<int:number_messages>')
-def get_last_messages(number_messages):
-    '''
-    get number_messages last messages
-    '''
-
-    app.logger.debug(
-        'get_last_messages(number_messages={})'.format(number_messages))
-
-    message_list = MESSAGE_LIST[-number_messages:]
-
-    return message_list_to_json(message_list)
-
-
-@app.route('/chat/get_all_messages')
-def get_all_messages():
-    '''
-    get all last messages
-    '''
-
-    app.logger.debug('get_all_last_messages')
-
-    return message_list_to_json(MESSAGE_LIST)
+    # response has http status code 200 (meaning "successful")
+    return 'Message posted!', 200
 
 
 if __name__ == "__main__":
-    # will serve on http://127.0.0.1:5000/
-    # you can navigate there with your browser
-
-    import sys
-
-    # if an argument of the form '192.168.81.116' is given, it will be the
-    # address the server binds do
-
-    if len(sys.argv) == 1:
-        ip = '127.0.0.1'
-    elif len(sys.argv) == 2:
-        ip = sys.argv[1]
-    else:
-        print('usage: {} [ip]'.format(sys.argv[0]))
-        sys.exit(255)
-    print('binding to {}'.format(ip))
-
-    app.run(debug=True, host=ip, port=8080)
-
+    # this will start the integrated flask web server (meant for development,
+    # not for production use)
+    app.run(debug=True, host="0.0.0.0", port=8080)

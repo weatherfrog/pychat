@@ -1,0 +1,42 @@
+body {
+    font-family: sans-serif;
+}
+
+.messages {
+    border: 1px solid #aaaaaa;
+    overflow-y: auto;
+    font-size: small;
+
+    height: 200px;
+    width: 80%; 
+    background-color: #eeeeee; 
+}
+
+#inputfield {
+    margin-top: 10px;
+    border: solid 2px #333333;
+}
+
+.message {
+    margin-top: 5px;
+}
+
+.message .author {
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.message .time {
+    color: #777777;
+}
+
+.message .text {
+    margin-top: 3px;
+}
+
+.logo {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 99999;
+}

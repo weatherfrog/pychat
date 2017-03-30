@@ -1,6 +1,9 @@
 # pychat
 
-Python chat for the Powercoders school
+Very simple chat server based on Flask.
+
+![Screenshot](screenshot.png)
+
 
 
 ## Instructions
@@ -19,56 +22,24 @@ python.exe -m venv venv
 venv\Scripts\activate
 ```
 
-Then install requirements:
+Then install requirements (flask):
 
 ```
 pip install -r requirements.txt
 ```
 
-Start the server:
+Start the chat server:
 
 ```
-python pychat/server.py 0.0.0.0
+python pychat/server.py 
+ * Running on http://0.0.0.0:8080/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 673-164-341
 ```
 
-Start the client in a different terminal (don't forget to activate the virtual
-environment again):
+Point your browser to [http://0.0.0.0:8080](http://0.0.0.0:8080) and start
+chatting!
 
-```
-python pychat/client.py 0.0.0.0
-```
-
-Start chatting:
-
-```
-connecting to 0.0.0.0
-      * 
-      * Welcome to the "power.coders chat"!
-      * 
-      * if you are lost: call for "/help"
-      * 
-      * What is your desired user name? John
-      * 
-available commands are:
-    - /help: print help (the one you are looking at).
-    - /quit: quit the chat.
-    - /poll [<number_messages>]: get all (or <number_messages>) from the server
-    everything else will be posted.
-
-chat> Hello!
-11:44:15 John:
-    Hello!
-
-chat> 
-```
-
-The Python command line client is very basic. You have to poll for new messages
-manually:
-
-```
-chat> /poll
-11:44:15 John:
-    Hello!
-```
-
-We'll create a Web-based client 
+Hint: You can find out your IP address with `ifconfig` and let others use your
+chat server.
