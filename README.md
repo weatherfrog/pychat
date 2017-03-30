@@ -31,14 +31,19 @@ pip install -r requirements.txt
 Start the chat server:
 
 ```
-python pychat/server.py 
+python pychat/server.py
  * Running on http://0.0.0.0:8080/ (Press CTRL+C to quit)
  * Restarting with stat
  * Debugger is active!
  * Debugger PIN: 673-164-341
 ```
 
-Point your browser to [http://0.0.0.0:8080](http://0.0.0.0:8080) and start
+Point your browser to
+
+- Linux/Mac: [http://0.0.0.0:8080](http://0.0.0.0:8080)
+- Windows: [http://127.0.0.1:8080](http://127.0.0.1:8080)
+
+and start
 chatting!
 
 Hint: You can find out your IP address with `ifconfig` and let others use your
