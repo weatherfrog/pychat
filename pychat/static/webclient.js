@@ -32,9 +32,11 @@ function poll(scrollDown) {
     }
   };
 
+  var nickname = document.getElementById("nickname").value;
+
   $.ajax({
     dataType: "json",
-    url: "/chat/get_all_messages",
+    url: "/chat/get_all_messages/" + nickname,
     success: success
   });
 }

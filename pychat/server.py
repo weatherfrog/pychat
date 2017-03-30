@@ -22,8 +22,8 @@ def index():
     return render_template("webclient.html")
 
 
-@app.route('/chat/get_all_messages')
-def get_all_messages():
+@app.route('/chat/get_all_messages/<nickname>')
+def get_all_messages(nickname):
     '''
     Returns a json list of the following form:
 
@@ -35,7 +35,13 @@ def get_all_messages():
           }, 
           ...
         ]
+
+    Args:
+        nickname: nickname of the user requesting messages
     '''
+    # TODO filter out private messages that are not meant to be seen by user
+    # `nickname`
+
     # note that jsonify() automatically sets correct http header
     # ("Content-type: application/json" etc.)
     return jsonify(message_list)
@@ -54,6 +60,11 @@ def post_message():
         }
     '''
     data = request.json
+
+    # TODO check if message starts with @somenickname. If so, it is a personal
+    # message that should not be visible to other users. Store this information
+    # below in an additional key/value pair (call it "message_for":
+    # "somenickname", for example)
 
     # Check if json data has "nickname" and "message" attributes.
     # If data contains other attributes, we ignore them.
