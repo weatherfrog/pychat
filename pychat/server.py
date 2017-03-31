@@ -61,7 +61,7 @@ def post_message():
             'nickname': 'some username',
             'message': 'blablabla',
         }
-    '''738262
+    '''
     data = request.json
 
     # TODO check if message starts with @somenickname. If so, it is a personal
