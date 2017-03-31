@@ -8,13 +8,14 @@ from datetime import datetime
 
 from flask import request, render_template, Flask, jsonify
 
+from sys import argv
+
 app = Flask(__name__)
 
 
 # holds all messages. A message is a dict with keys 'nickname', 'message', and
 # 'time'
 message_list = []
-
 
 @app.route('/')
 def index():
@@ -60,7 +61,7 @@ def post_message():
             'nickname': 'some username',
             'message': 'blablabla',
         }
-    '''
+    '''738262
     data = request.json
 
     # TODO check if message starts with @somenickname. If so, it is a personal
@@ -89,4 +90,4 @@ def post_message():
 if __name__ == "__main__":
     # this will start the integrated flask web server (meant for development,
     # not for production use)
-    app.run(debug=True, host="0.0.0.0", port=8080)
+    app.run(debug=True, host="0.0.0.0", port=int(argv[1]))
